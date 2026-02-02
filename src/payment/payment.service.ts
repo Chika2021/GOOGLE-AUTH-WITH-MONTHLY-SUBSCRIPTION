@@ -11,7 +11,7 @@ export class PaymentService {
         // Logic to process payment via Paystack
         try {
             // Simulate payment processing
-            const response =  await axios.post('https://api.paystack.co/transaction/initialize', {
+            const response = await axios.post('https://api.paystack.co/transaction/initialize', {
                 email,
                 amount: amount * 100,
                 callback_url: process.env.PAYSTACK_CALLBACK_URL
@@ -29,8 +29,10 @@ export class PaymentService {
 
 
         } catch (error) {
+            console.error('Paystack error:', error.response?.data || error.message);
             throw new InternalServerErrorException('Payment processing failed');
         }
+
     }
 
     async verifyPayment(reference: string) {
@@ -43,12 +45,15 @@ export class PaymentService {
                 }
             });
             return response.data.data;
-        } catch (error) {
+        }
+        catch (error) {
+            console.error('Paystack error:', error.response?.data || error.message);
             throw new InternalServerErrorException('Payment verification failed');
         }
+
     }
 
-   
 
-   
+
+
 }
