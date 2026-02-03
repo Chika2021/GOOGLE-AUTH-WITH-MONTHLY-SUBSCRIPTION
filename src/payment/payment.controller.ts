@@ -52,6 +52,9 @@ export class PaymentController {
       throw new Error('User email not found');
     }
     const amount = 10000; // ₦10,000 subscription amount
+    if (amount != 10000) {
+      throw new Error('Invalid subscription amount');
+    }
     return this.paymentService.processPayment(email, amount);
   }
 
